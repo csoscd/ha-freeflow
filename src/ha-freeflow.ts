@@ -125,7 +125,7 @@ export class HaFreeflowCard extends LitElement {
     });
 
     const nodeHtml = this._config.nodes.map((node) =>
-      renderNode(node, states, this._defaults, (n) => this._handleTap(n))
+      renderNode(node, states, this._defaults, (n) => this._handleTap(n), viewHeight)
     );
 
     const viewHeight = this._config.view_height ?? 100;

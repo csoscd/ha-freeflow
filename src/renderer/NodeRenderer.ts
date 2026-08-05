@@ -17,7 +17,8 @@ export function renderNode(
   node: NodeConfig,
   hassStates: Record<string, HassEntity>,
   defaults: CardDefaults,
-  onTap: (node: NodeConfig) => void
+  onTap: (node: NodeConfig) => void,
+  viewHeight: number = 100
 ): TemplateResult {
   const size = node.size ?? defaults.size ?? DEFAULT_SIZE;
   const showCircle = node.circle !== false;
@@ -37,7 +38,7 @@ export function renderNode(
   const nodeStyle = styleMap({
     position: 'absolute',
     left: `${node.x}%`,
-    top: `${node.y}%`,
+    top: `${(node.y / viewHeight) * 100}%`,
     transform: 'translate(-50%, -50%)',
     width: `${d}cqw`,
     height: `${d}cqw`,
