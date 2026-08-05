@@ -43,6 +43,9 @@ export interface FlowConfig {
   // 'negative_only': animate only when sensor < 0
   // 'bidirectional' (default): animate in both directions based on sign
   direction?: 'bidirectional' | 'positive_only' | 'negative_only';
+  show_value?: boolean;
+  value_decimals?: number;
+  value_unit?: string;
 }
 
 export interface CardDefaults {

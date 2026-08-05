@@ -23,6 +23,50 @@ function resolveColor(rf: ResolvedFlow): string {
   return val > 0 ? positiveColor : negativeColor;
 }
 
+function midpoint(rf: ResolvedFlow): { x: number; y: number } {
+  return {
+    x: (rf.fromNode.x + rf.toNode.x) / 2,
+    y: (rf.fromNode.y + rf.toNode.y) / 2,
+  };
+}
+
+function formatFlowValue(rf: ResolvedFlow): string {
+  const val = rf.sensorValue;
+  if (val === null) return '--';
+  const decimals = rf.flow.value_decimals ?? 0;
+  const unit = rf.flow.value_unit ?? 'W';
+  return `${Math.abs(val).toFixed(decimals)} ${unit}`;
+}
+
+function renderFlowLabel(rf: ResolvedFlow): SVGTemplateResult {
+  if (!rf.flow.show_value) return svg``;
+  const color = resolveColor(rf);
+  const { x, y } = midpoint(rf);
+  const text = formatFlowValue(rf);
+  const padX = 1.8;
+  const padY = 1.0;
+  const fontSize = 2.8;
+  const approxWidth = text.length * fontSize * 0.55 + padX * 2;
+
+  return svg`
+    <rect
+      x="${x - approxWidth / 2}" y="${y - fontSize / 2 - padY}"
+      width="${approxWidth}" height="${fontSize + padY * 2}"
+      rx="1.5" ry="1.5"
+      fill="var(--card-background-color, #fff)"
+      stroke="${color}" stroke-width="0.25"
+    />
+    <text
+      x="${x}" y="${y + fontSize * 0.35}"
+      text-anchor="middle"
+      font-size="${fontSize}"
+      fill="${color}"
+      font-weight="600"
+      font-family="var(--paper-font-body1_-_font-family, sans-serif)"
+    >${text}</text>
+  `;
+}
+
 function buildPath(rf: ResolvedFlow, lineStyle: 'bezier' | 'straight'): string {
   const x1 = rf.fromNode.x;
   const y1 = rf.fromNode.y;
@@ -67,6 +111,7 @@ export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
 
   return svg`
     <path id="${id}" d="${path}" fill="none" stroke="${color}" stroke-width="0.4" stroke-opacity="0.3"/>
+    ${renderFlowLabel(rf)}
     ${effective !== null && effective !== 0 ? svg`
       <circle r="0.8" fill="${color}">
         <animateMotion dur="${duration}s" repeatCount="indefinite" keyTimes="0;1"
@@ -119,5 +164,6 @@ export function renderGradient(rf: ResolvedFlow): SVGTemplateResult {
       </linearGradient>
     </defs>
     <path d="${path}" fill="none" stroke="url(#${id})" stroke-width="0.8"/>
+    ${renderFlowLabel(rf)}
   `;
 }
