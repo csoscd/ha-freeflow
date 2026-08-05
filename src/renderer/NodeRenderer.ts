@@ -20,7 +20,7 @@ export function renderNode(
   onTap: (node: NodeConfig) => void,
   viewHeight: number = 100
 ): TemplateResult {
-  const size = node.size ?? defaults.size ?? DEFAULT_SIZE;
+  const d = node.size ?? defaults.size ?? DEFAULT_SIZE;
   const showCircle = node.circle !== false;
 
   const allUnavailable = node.entities.every((e) => {
@@ -32,13 +32,22 @@ export function renderNode(
     return html``;
   }
 
-  // All sizes in cqw (= % of .flow-canvas width, set as container)
-  const d = size; // diameter in cqw
+  const topPct = (node.y / viewHeight) * 100;
 
-  const nodeStyle = styleMap({
+  // Zero-size anchor at node coordinates — circle is centered on this point,
+  // label floats below without shifting the circle center (= SVG flow endpoint).
+  const anchorStyle = styleMap({
     position: 'absolute',
     left: `${node.x}%`,
-    top: `${(node.y / viewHeight) * 100}%`,
+    top: `${topPct}%`,
+    width: '0',
+    height: '0',
+  });
+
+  const iconSize = `${d * 0.42}cqw`;
+
+  const circleStyle = styleMap({
+    position: 'absolute',
     transform: 'translate(-50%, -50%)',
     width: `${d}cqw`,
     height: `${d}cqw`,
@@ -53,11 +62,9 @@ export function renderNode(
     cursor: 'pointer',
     'user-select': 'none',
     overflow: 'hidden',
-    padding: `${d * 0.06}cqw`,
+    padding: `${d * 0.05}cqw`,
     gap: `${d * 0.02}cqw`,
   });
-
-  const iconSize = `${d * 0.38}cqw`;
 
   const iconStyle = styleMap({
     width: iconSize,
@@ -67,20 +74,8 @@ export function renderNode(
     color: 'var(--primary-text-color)',
   });
 
-  const labelStyle = styleMap({
-    'font-size': `${d * 0.17}cqw`,
-    'font-weight': '600',
-    color: 'var(--primary-text-color)',
-    'line-height': '1',
-    'text-align': 'center',
-    'white-space': 'nowrap',
-    overflow: 'hidden',
-    'text-overflow': 'ellipsis',
-    'max-width': '100%',
-  });
-
   const sublabelStyle = styleMap({
-    'font-size': `${d * 0.11}cqw`,
+    'font-size': `${d * 0.12}cqw`,
     color: 'var(--disabled-text-color)',
     'line-height': '1',
     'text-align': 'center',
@@ -88,30 +83,46 @@ export function renderNode(
   });
 
   const valueStyle = styleMap({
-    'font-size': `${d * 0.15}cqw`,
+    'font-size': `${d * 0.16}cqw`,
     color: 'var(--secondary-text-color)',
-    'line-height': '1',
+    'line-height': '1.1',
     'text-align': 'center',
     'white-space': 'nowrap',
   });
 
+  // Label sits below the circle, centered on the same X axis
+  const labelStyle = styleMap({
+    position: 'absolute',
+    top: `${d * 0.55}cqw`,
+    transform: 'translateX(-50%)',
+    'font-size': `${d * 0.16}cqw`,
+    'font-weight': '600',
+    color: 'var(--primary-text-color)',
+    'line-height': '1.2',
+    'text-align': 'center',
+    'white-space': 'nowrap',
+    'pointer-events': 'none',
+  });
+
   return html`
-    <div style=${nodeStyle} @click=${() => onTap(node)}>
-      ${node.icon
-        ? html`<ha-icon icon=${node.icon} style=${iconStyle}></ha-icon>`
-        : node.image
-        ? html`<img src=${node.image} style=${styleMap({ width: iconSize, height: iconSize, 'object-fit': 'contain', 'flex-shrink': '0' })} />`
-        : html``}
+    <div style=${anchorStyle}>
+      <div style=${circleStyle} @click=${() => onTap(node)}>
+        ${node.icon
+          ? html`<ha-icon icon=${node.icon} style=${iconStyle}></ha-icon>`
+          : node.image
+          ? html`<img src=${node.image} style=${styleMap({ width: iconSize, height: iconSize, 'object-fit': 'contain', 'flex-shrink': '0' })} />`
+          : html``}
+        ${node.entities.map((entityConfig) => {
+          const haEntity = hassStates[entityConfig.entity];
+          const state = haEntity?.state ?? 'unavailable';
+          const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
+          return html`
+            ${entityConfig.label ? html`<div style=${sublabelStyle}>${entityConfig.label}</div>` : html``}
+            <div style=${valueStyle}>${value}</div>
+          `;
+        })}
+      </div>
       <div style=${labelStyle}>${node.label}</div>
-      ${node.entities.map((entityConfig) => {
-        const haEntity = hassStates[entityConfig.entity];
-        const state = haEntity?.state ?? 'unavailable';
-        const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
-        return html`
-          ${entityConfig.label ? html`<div style=${sublabelStyle}>${entityConfig.label}</div>` : html``}
-          <div style=${valueStyle}>${value}</div>
-        `;
-      })}
     </div>
   `;
 }
