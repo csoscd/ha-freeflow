@@ -119,6 +119,8 @@ export class HaFreeflowCard extends LitElement {
     const states = this.hass?.states ?? {};
     const resolvedFlows = this._resolveFlows();
 
+    const viewHeight = this._config.view_height ?? 100;
+
     const flowSvg = resolvedFlows.map((rf) => {
       const style = rf.flow.flow_style ?? this._defaults.flow_style ?? 'dots';
       return style === 'gradient' ? renderGradient(rf) : renderDots(rf);
@@ -127,8 +129,6 @@ export class HaFreeflowCard extends LitElement {
     const nodeHtml = this._config.nodes.map((node) =>
       renderNode(node, states, this._defaults, (n) => this._handleTap(n), viewHeight)
     );
-
-    const viewHeight = this._config.view_height ?? 100;
 
     return html`
       <ha-card>
