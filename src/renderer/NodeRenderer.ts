@@ -91,11 +91,12 @@ export function renderNode(
     'white-space': 'nowrap',
   });
 
-  // Label sits below the circle, centered on the same X axis
+  const labelAbove = (node.label_position ?? 'below') === 'above';
   const labelStyle = styleMap({
     position: 'absolute',
-    top: `${d * 0.55}cqw`,
-    transform: 'translateX(-50%)',
+    ...(labelAbove
+      ? { top: `-${d * 0.55}cqw`, transform: 'translateX(-50%) translateY(-100%)' }
+      : { top: `${d * 0.55}cqw`, transform: 'translateX(-50%)' }),
     'font-size': `${d * 0.14}cqw`,
     'font-weight': '400',
     color: 'var(--secondary-text-color)',

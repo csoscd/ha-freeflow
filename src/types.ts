@@ -26,6 +26,7 @@ export interface NodeConfig {
   circle?: boolean;
   color?: string;
   size?: number;
+  label_position?: 'above' | 'below';
   hide_if_unavailable?: boolean;
   tap_action?: TapAction;
   entities: EntityConfig[];
