@@ -46,18 +46,28 @@ function buildPath(rf: ResolvedFlow, lineStyle: 'bezier' | 'straight'): string {
   return `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`;
 }
 
+function effectiveSensorValue(rf: ResolvedFlow): number | null {
+  const val = rf.sensorValue;
+  if (val === null) return null;
+  const direction = rf.flow.direction ?? 'bidirectional';
+  if (direction === 'positive_only' && val < 0) return null;
+  if (direction === 'negative_only' && val > 0) return null;
+  return val;
+}
+
 export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
   const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
   const path = buildPath(rf, lineStyle);
   const color = resolveColor(rf);
   const id = `flow-${rf.flow.from}-${rf.flow.to}`;
-  const speed = rf.sensorValue === null ? 0 : Math.max(0.5, Math.min(5, Math.abs(rf.sensorValue) / 500));
-  const duration = rf.sensorValue === null ? 0 : (1 / speed).toFixed(2);
-  const reverse = rf.sensorValue !== null && rf.sensorValue < 0;
+  const effective = effectiveSensorValue(rf);
+  const speed = effective === null ? 0 : Math.max(0.5, Math.min(5, Math.abs(effective) / 500));
+  const duration = effective === null ? 0 : (1 / speed).toFixed(2);
+  const reverse = effective !== null && effective < 0;
 
   return svg`
     <path id="${id}" d="${path}" fill="none" stroke="${color}" stroke-width="0.4" stroke-opacity="0.3"/>
-    ${rf.sensorValue !== null && rf.sensorValue !== 0 ? svg`
+    ${effective !== null && effective !== 0 ? svg`
       <circle r="0.8" fill="${color}">
         <animateMotion dur="${duration}s" repeatCount="indefinite" keyTimes="0;1"
           keyPoints="${reverse ? '1;0' : '0;1'}">
@@ -87,7 +97,8 @@ export function renderGradient(rf: ResolvedFlow): SVGTemplateResult {
   const path = buildPath(rf, lineStyle);
   const color = resolveColor(rf);
   const id = `grad-${rf.flow.from}-${rf.flow.to}`;
-  const reverse = rf.sensorValue !== null && rf.sensorValue < 0;
+  const effective = effectiveSensorValue(rf);
+  const reverse = effective !== null && effective < 0;
   const from = reverse ? '100%' : '0%';
   const to = reverse ? '0%' : '100%';
 
@@ -95,13 +106,13 @@ export function renderGradient(rf: ResolvedFlow): SVGTemplateResult {
     <defs>
       <linearGradient id="${id}" x1="${from}" y1="0%" x2="${to}" y2="0%">
         <stop offset="0%" stop-color="${color}" stop-opacity="0">
-          ${rf.sensorValue !== null && rf.sensorValue !== 0 ? svg`
+          ${effective !== null && effective !== 0 ? svg`
             <animate attributeName="stop-opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
           ` : svg``}
         </stop>
         <stop offset="50%" stop-color="${color}" stop-opacity="1"/>
         <stop offset="100%" stop-color="${color}" stop-opacity="0">
-          ${rf.sensorValue !== null && rf.sensorValue !== 0 ? svg`
+          ${effective !== null && effective !== 0 ? svg`
             <animate attributeName="stop-opacity" values="0;1;0" dur="2s" begin="1s" repeatCount="indefinite"/>
           ` : svg``}
         </stop>
