@@ -83,7 +83,7 @@ export function renderNode(
   });
 
   const valueStyle = styleMap({
-    'font-size': `${d * 0.16}cqw`,
+    'font-size': `${d * 0.14}cqw`,
     color: 'var(--secondary-text-color)',
     'line-height': '1.1',
     'text-align': 'center',

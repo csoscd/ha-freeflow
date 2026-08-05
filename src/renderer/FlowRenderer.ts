@@ -43,9 +43,9 @@ function renderFlowLabel(rf: ResolvedFlow): SVGTemplateResult {
   const color = resolveColor(rf);
   const { x, y } = midpoint(rf);
   const text = formatFlowValue(rf);
-  const padX = 1.2;
-  const padY = 0.7;
-  const fontSize = 2.2;
+  const padX = 0.8;
+  const padY = 0.5;
+  const fontSize = 1.7;
   const approxWidth = text.length * fontSize * 0.52 + padX * 2;
 
   return svg`
