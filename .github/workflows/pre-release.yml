@@ -1,0 +1,50 @@
+name: Pre-Release on Branch Push
+
+on:
+  push:
+    branches:
+      - 'dev/**'
+      - 'feature/**'
+
+jobs:
+  build-and-pre-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Derive pre-release tag
+        id: tag
+        run: |
+          BRANCH="${GITHUB_REF_NAME}"
+          SAFE=$(echo "$BRANCH" | sed 's/[^a-zA-Z0-9._-]/-/g')
+          echo "tag=v0.0.0-${SAFE}" >> "$GITHUB_OUTPUT"
+
+      - name: Delete existing pre-release if present
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete "${{ steps.tag.outputs.tag }}" --yes 2>/dev/null || true
+          git push --delete origin "${{ steps.tag.outputs.tag }}" 2>/dev/null || true
+
+      - name: Create pre-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            dist/ha-freeflow.js \
+            --prerelease \
+            --title "Pre-Release: ${{ github.ref_name }}" \
+            --notes "Automatischer Pre-Release vom Branch \`${{ github.ref_name }}\`."

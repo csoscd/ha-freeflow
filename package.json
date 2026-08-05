@@ -1,0 +1,16 @@
+{
+  "name": "ha-freeflow",
+  "version": "0.1.0",
+  "description": "Custom Home Assistant Lovelace card for freely configurable energy flow visualization",
+  "scripts": {
+    "build": "esbuild src/ha-freeflow.ts --bundle --outfile=dist/ha-freeflow.js --format=esm --minify",
+    "watch": "esbuild src/ha-freeflow.ts --bundle --outfile=dist/ha-freeflow.js --format=esm --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "lit": "^3.2.0"
+  }
+}

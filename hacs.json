@@ -1,0 +1,6 @@
+{
+  "name": "ha-freeflow",
+  "content_in_root": false,
+  "filename": "dist/ha-freeflow.js",
+  "render_readme": true
+}
