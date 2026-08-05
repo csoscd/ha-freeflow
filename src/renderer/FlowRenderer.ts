@@ -105,8 +105,10 @@ export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
   const color = resolveColor(rf);
   const id = `flow-${rf.flow.from}-${rf.flow.to}`;
   const effective = effectiveSensorValue(rf);
-  const speed = effective === null ? 0 : Math.max(0.5, Math.min(5, Math.abs(effective) / 500));
-  const duration = effective === null ? 0 : (1 / speed).toFixed(2);
+  // duration in seconds: 200W→10s, 500W→4s, 1000W→2s, 5000W→1.5s (min)
+  const duration = effective === null || effective === 0
+    ? 0
+    : Math.max(1.5, Math.min(10, 2000 / Math.abs(effective))).toFixed(1);
   const reverse = effective !== null && effective < 0;
 
   return svg`
