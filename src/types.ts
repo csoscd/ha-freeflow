@@ -60,6 +60,7 @@ export interface CardDefaults {
 export interface CardConfig {
   type: string;
   title?: string;
+  view_height?: number; // SVG viewBox height (0–100), default 100 → square card
   defaults?: CardDefaults;
   nodes: NodeConfig[];
   flows: FlowConfig[];

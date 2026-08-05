@@ -128,6 +128,8 @@ export class HaFreeflowCard extends LitElement {
       renderNode(node, states, this._defaults, (n) => this._handleTap(n))
     );
 
+    const viewHeight = this._config.view_height ?? 100;
+
     return html`
       <ha-card>
         ${this._config.title
@@ -138,7 +140,7 @@ export class HaFreeflowCard extends LitElement {
             <!-- SVG layer: flow lines only -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 100 100"
+              viewBox="0 0 100 ${viewHeight}"
               class="flow-svg"
               preserveAspectRatio="xMidYMid meet"
             >
@@ -159,7 +161,6 @@ export class HaFreeflowCard extends LitElement {
       display: block;
     }
     ha-card {
-      height: 100%;
       display: flex;
       flex-direction: column;
     }
