@@ -1,4 +1,4 @@
-import { LitElement, html, svg, css, PropertyValues } from 'lit';
+import { LitElement, html, css, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import {
   CardConfig,
@@ -124,7 +124,7 @@ export class HaFreeflowCard extends LitElement {
       return style === 'gradient' ? renderGradient(rf) : renderDots(rf);
     });
 
-    const nodeSvg = this._config.nodes.map((node) =>
+    const nodeHtml = this._config.nodes.map((node) =>
       renderNode(node, states, this._defaults, (n) => this._handleTap(n))
     );
 
@@ -134,16 +134,21 @@ export class HaFreeflowCard extends LitElement {
           ? html`<div class="card-header">${this._config.title}</div>`
           : ''}
         <div class="card-content">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 100 100"
-            width="100%"
-            height="100%"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            ${flowSvg}
-            ${nodeSvg}
-          </svg>
+          <div class="flow-canvas">
+            <!-- SVG layer: flow lines only -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              class="flow-svg"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              ${flowSvg}
+            </svg>
+            <!-- HTML layer: nodes with ha-icon -->
+            <div class="node-layer">
+              ${nodeHtml}
+            </div>
+          </div>
         </div>
       </ha-card>
     `;
@@ -167,19 +172,25 @@ export class HaFreeflowCard extends LitElement {
     .card-content {
       flex: 1;
       padding: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    svg {
+    .flow-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .flow-svg {
       display: block;
+      width: 100%;
+      height: 100%;
       overflow: visible;
     }
-    .ha-freeflow-node {
-      transition: opacity 0.2s;
+    .node-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
     }
-    .ha-freeflow-node:hover {
-      opacity: 0.85;
+    .node-layer > * {
+      pointer-events: auto;
     }
   `;
 }

@@ -1,4 +1,5 @@
-import { svg, SVGTemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { NodeConfig, EntityConfig, HassEntity, CardDefaults } from '../types.js';
 
 const DEFAULT_SIZE = 12;
@@ -12,45 +13,13 @@ function formatValue(state: string, config: EntityConfig, haEntity: HassEntity):
   return `${num.toFixed(decimals)}${unit ? ' ' + unit : ''}`;
 }
 
-function renderIcon(icon: string, cx: number, cy: number, size: number): SVGTemplateResult {
-  // MDI icons rendered as text using ha-icon convention
-  // We use a foreignObject to embed an ha-icon element
-  const half = size / 2;
-  return svg`
-    <foreignObject x="${cx - half * 0.5}" y="${cy - half * 0.6}" width="${half}" height="${half}">
-      <ha-icon
-        xmlns="http://www.w3.org/1999/xhtml"
-        icon="${icon}"
-        style="width:100%;height:100%;color:var(--primary-text-color)">
-      </ha-icon>
-    </foreignObject>
-  `;
-}
-
-function renderImage(imageUrl: string, cx: number, cy: number, size: number): SVGTemplateResult {
-  const half = size / 2;
-  return svg`
-    <image
-      href="${imageUrl}"
-      x="${cx - half * 0.4}"
-      y="${cy - half * 0.6}"
-      width="${half * 0.8}"
-      height="${half * 0.8}"
-      preserveAspectRatio="xMidYMid meet"
-    />
-  `;
-}
-
 export function renderNode(
   node: NodeConfig,
   hassStates: Record<string, HassEntity>,
   defaults: CardDefaults,
   onTap: (node: NodeConfig) => void
-): SVGTemplateResult {
+): TemplateResult {
   const size = node.size ?? defaults.size ?? DEFAULT_SIZE;
-  const radius = size / 2;
-  const cx = node.x;
-  const cy = node.y;
   const showCircle = node.circle !== false;
 
   const allUnavailable = node.entities.every((e) => {
@@ -60,59 +29,81 @@ export function renderNode(
 
   const hideIfUnavailable = node.hide_if_unavailable ?? defaults.hide_if_unavailable ?? false;
   if (hideIfUnavailable && allUnavailable) {
-    return svg``;
+    return html``;
   }
 
-  const labelFontSize = radius * 0.28;
-  const valueFontSize = radius * 0.24;
+  // Size in % units – treat size as diameter in the 0-100 SVG coordinate space,
+  // converted to percentage of container
+  const diameterPct = size;
+  const radiusPct = diameterPct / 2;
 
-  const entityLines: SVGTemplateResult[] = node.entities.map((entityConfig, i) => {
-    const haEntity = hassStates[entityConfig.entity];
-    const state = haEntity?.state ?? 'unavailable';
-    const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
-    const lineLabel = entityConfig.label;
-    const yOffset = cy + radius * 0.2 + i * (valueFontSize * 1.6);
-
-    return svg`
-      ${lineLabel ? svg`
-        <text x="${cx}" y="${yOffset - valueFontSize * 0.8}" text-anchor="middle"
-          font-size="${valueFontSize * 0.85}" fill="var(--secondary-text-color)" font-family="var(--paper-font-body1_-_font-family, sans-serif)">
-          ${lineLabel}
-        </text>
-      ` : svg``}
-      <text x="${cx}" y="${yOffset + valueFontSize * 0.5}" text-anchor="middle"
-        font-size="${valueFontSize}" fill="var(--primary-text-color)" font-weight="500"
-        font-family="var(--paper-font-body1_-_font-family, sans-serif)">
-        ${value}
-      </text>
-    `;
+  const containerStyle = styleMap({
+    position: 'absolute',
+    left: `${node.x}%`,
+    top: `${node.y}%`,
+    transform: 'translate(-50%, -50%)',
+    width: `${diameterPct}%`,
+    height: `${diameterPct}%`,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    borderRadius: showCircle ? '50%' : '0',
+    border: showCircle ? '1px solid var(--divider-color, #ccc)' : 'none',
+    background: showCircle ? 'var(--card-background-color, #fff)' : 'transparent',
+    boxSizing: 'border-box',
+    padding: `${radiusPct * 0.1}%`,
+    userSelect: 'none',
   });
 
-  return svg`
-    <g
-      class="ha-freeflow-node"
-      cursor="pointer"
-      @click="${() => onTap(node)}"
-    >
-      ${showCircle ? svg`
-        <circle
-          cx="${cx}" cy="${cy}" r="${radius}"
-          fill="var(--card-background-color, #fff)"
-          stroke="var(--divider-color, #ccc)"
-          stroke-width="0.3"
-        />
-      ` : svg``}
+  const iconStyle = styleMap({
+    width: `${diameterPct * 0.35}%`,
+    height: `${diameterPct * 0.35}%`,
+    '--mdc-icon-size': '100%',
+    color: 'var(--primary-text-color)',
+    flexShrink: '0',
+  });
 
-      ${node.icon ? renderIcon(node.icon, cx, cy - radius * 0.15, size) : svg``}
-      ${node.image ? renderImage(node.image, cx, cy - radius * 0.15, size) : svg``}
+  const labelStyle = styleMap({
+    fontSize: `${diameterPct * 0.22}%`,
+    fontWeight: '600',
+    color: 'var(--primary-text-color)',
+    lineHeight: '1.1',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '100%',
+  });
 
-      <text x="${cx}" y="${cy - radius * 0.45}" text-anchor="middle"
-        font-size="${labelFontSize}" fill="var(--primary-text-color)" font-weight="600"
-        font-family="var(--paper-font-body1_-_font-family, sans-serif)">
-        ${node.label}
-      </text>
+  const valueStyle = styleMap({
+    fontSize: `${diameterPct * 0.18}%`,
+    color: 'var(--secondary-text-color)',
+    lineHeight: '1.2',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+  });
 
-      ${entityLines}
-    </g>
+  return html`
+    <div style=${containerStyle} @click=${() => onTap(node)}>
+      ${node.icon
+        ? html`<ha-icon icon=${node.icon} style=${iconStyle}></ha-icon>`
+        : node.image
+        ? html`<img src=${node.image} style=${styleMap({ width: '50%', height: '50%', objectFit: 'contain' })} />`
+        : html``}
+      <div style=${labelStyle}>${node.label}</div>
+      ${node.entities.map((entityConfig) => {
+        const haEntity = hassStates[entityConfig.entity];
+        const state = haEntity?.state ?? 'unavailable';
+        const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
+        return html`
+          ${entityConfig.label
+            ? html`<div style=${styleMap({ ...valueStyle, fontSize: `${diameterPct * 0.15}%`, color: 'var(--disabled-text-color)' })}>${entityConfig.label}</div>`
+            : html``}
+          <div style=${valueStyle}>${value}</div>
+        `;
+      })}
+    </div>
   `;
 }
