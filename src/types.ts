@@ -24,6 +24,7 @@ export interface NodeConfig {
   x: number;
   y: number;
   circle?: boolean;
+  color?: string;
   size?: number;
   hide_if_unavailable?: boolean;
   tap_action?: TapAction;
@@ -53,6 +54,7 @@ export interface CardDefaults {
   line_style?: LineStyle;
   color_positive?: string;
   color_negative?: string;
+  node_color?: string;
   size?: number;
   hide_if_unavailable?: boolean;
 }

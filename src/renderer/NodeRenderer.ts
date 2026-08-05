@@ -22,6 +22,7 @@ export function renderNode(
 ): TemplateResult {
   const d = node.size ?? defaults.size ?? DEFAULT_SIZE;
   const showCircle = node.circle !== false;
+  const borderColor = node.color ?? defaults.node_color ?? 'var(--divider-color, #e0e0e0)';
 
   const allUnavailable = node.entities.every((e) => {
     const s = hassStates[e.entity]?.state;
@@ -52,7 +53,7 @@ export function renderNode(
     width: `${d}cqw`,
     height: `${d}cqw`,
     'border-radius': showCircle ? '50%' : '4px',
-    border: showCircle ? '1px solid var(--divider-color, #e0e0e0)' : 'none',
+    border: showCircle ? `${d * 0.05}cqw solid ${borderColor}` : 'none',
     background: showCircle ? 'var(--card-background-color, #fff)' : 'transparent',
     'box-sizing': 'border-box',
     display: 'flex',
