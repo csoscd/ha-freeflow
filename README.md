@@ -1,8 +1,18 @@
 # ha-freeflow
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+[![GitHub Release](https://img.shields.io/github/release/csoscd/ha-freeflow.svg)](https://github.com/csoscd/ha-freeflow/releases)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 A custom Home Assistant Lovelace card for freely configurable energy flow visualization.
+
+---
+
+## Support me
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O5O21U13R9)
+
+---
 
 ## Features
 
@@ -19,7 +29,7 @@ A custom Home Assistant Lovelace card for freely configurable energy flow visual
 
 ## Installation via HACS
 
-1. Add this repository as a custom repository in HACS (category: **Lovelace**)
+1. Add this repository as a custom repository in HACS (category: **Dashboard**)
 2. Install **ha-freeflow**
 3. Add the resource and use the card
 
