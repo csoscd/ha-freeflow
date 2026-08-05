@@ -43,25 +43,25 @@ function renderFlowLabel(rf: ResolvedFlow): SVGTemplateResult {
   const color = resolveColor(rf);
   const { x, y } = midpoint(rf);
   const text = formatFlowValue(rf);
-  const padX = 1.8;
-  const padY = 1.0;
-  const fontSize = 2.8;
-  const approxWidth = text.length * fontSize * 0.55 + padX * 2;
+  const padX = 1.2;
+  const padY = 0.7;
+  const fontSize = 2.2;
+  const approxWidth = text.length * fontSize * 0.52 + padX * 2;
 
   return svg`
     <rect
       x="${x - approxWidth / 2}" y="${y - fontSize / 2 - padY}"
       width="${approxWidth}" height="${fontSize + padY * 2}"
-      rx="1.5" ry="1.5"
+      rx="1.2" ry="1.2"
       fill="var(--card-background-color, #fff)"
-      stroke="${color}" stroke-width="0.25"
+      stroke="${color}" stroke-width="0.2"
     />
     <text
       x="${x}" y="${y + fontSize * 0.35}"
       text-anchor="middle"
       font-size="${fontSize}"
       fill="${color}"
-      font-weight="600"
+      font-weight="400"
       font-family="var(--paper-font-body1_-_font-family, sans-serif)"
     >${text}</text>
   `;
