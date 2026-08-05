@@ -170,18 +170,18 @@ export class HaFreeflowCard extends LitElement {
       color: var(--primary-text-color);
     }
     .card-content {
-      flex: 1;
       padding: 8px;
     }
     .flow-canvas {
       position: relative;
       width: 100%;
-      height: 100%;
+      container-type: inline-size;
     }
+    /* SVG with viewBox 0 0 100 100 has intrinsic 1:1 ratio → card height = card width */
     .flow-svg {
       display: block;
       width: 100%;
-      height: 100%;
+      height: auto;
       overflow: visible;
     }
     .node-layer {

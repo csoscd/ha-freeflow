@@ -27,70 +27,79 @@ export function renderNode(
     return s === 'unavailable' || s === 'unknown' || s === undefined;
   });
 
-  const hideIfUnavailable = node.hide_if_unavailable ?? defaults.hide_if_unavailable ?? false;
-  if (hideIfUnavailable && allUnavailable) {
+  if ((node.hide_if_unavailable ?? defaults.hide_if_unavailable ?? false) && allUnavailable) {
     return html``;
   }
 
-  // Size in % units – treat size as diameter in the 0-100 SVG coordinate space,
-  // converted to percentage of container
-  const diameterPct = size;
-  const radiusPct = diameterPct / 2;
+  // All sizes in cqw (= % of .flow-canvas width, set as container)
+  const d = size; // diameter in cqw
 
-  const containerStyle = styleMap({
+  const nodeStyle = styleMap({
     position: 'absolute',
     left: `${node.x}%`,
     top: `${node.y}%`,
     transform: 'translate(-50%, -50%)',
-    width: `${diameterPct}%`,
-    height: `${diameterPct}%`,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    borderRadius: showCircle ? '50%' : '0',
-    border: showCircle ? '1px solid var(--divider-color, #ccc)' : 'none',
+    width: `${d}cqw`,
+    height: `${d}cqw`,
+    'border-radius': showCircle ? '50%' : '4px',
+    border: showCircle ? '1px solid var(--divider-color, #e0e0e0)' : 'none',
     background: showCircle ? 'var(--card-background-color, #fff)' : 'transparent',
-    boxSizing: 'border-box',
-    padding: `${radiusPct * 0.1}%`,
-    userSelect: 'none',
+    'box-sizing': 'border-box',
+    display: 'flex',
+    'flex-direction': 'column',
+    'align-items': 'center',
+    'justify-content': 'center',
+    cursor: 'pointer',
+    'user-select': 'none',
+    overflow: 'hidden',
+    padding: `${d * 0.06}cqw`,
+    gap: `${d * 0.02}cqw`,
   });
 
+  const iconSize = `${d * 0.38}cqw`;
+
   const iconStyle = styleMap({
-    width: `${diameterPct * 0.35}%`,
-    height: `${diameterPct * 0.35}%`,
-    '--mdc-icon-size': '100%',
+    width: iconSize,
+    height: iconSize,
+    'flex-shrink': '0',
+    '--mdc-icon-size': iconSize,
     color: 'var(--primary-text-color)',
-    flexShrink: '0',
   });
 
   const labelStyle = styleMap({
-    fontSize: `${diameterPct * 0.22}%`,
-    fontWeight: '600',
+    'font-size': `${d * 0.17}cqw`,
+    'font-weight': '600',
     color: 'var(--primary-text-color)',
-    lineHeight: '1.1',
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
+    'line-height': '1',
+    'text-align': 'center',
+    'white-space': 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    maxWidth: '100%',
+    'text-overflow': 'ellipsis',
+    'max-width': '100%',
+  });
+
+  const sublabelStyle = styleMap({
+    'font-size': `${d * 0.11}cqw`,
+    color: 'var(--disabled-text-color)',
+    'line-height': '1',
+    'text-align': 'center',
+    'white-space': 'nowrap',
   });
 
   const valueStyle = styleMap({
-    fontSize: `${diameterPct * 0.18}%`,
+    'font-size': `${d * 0.15}cqw`,
     color: 'var(--secondary-text-color)',
-    lineHeight: '1.2',
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
+    'line-height': '1',
+    'text-align': 'center',
+    'white-space': 'nowrap',
   });
 
   return html`
-    <div style=${containerStyle} @click=${() => onTap(node)}>
+    <div style=${nodeStyle} @click=${() => onTap(node)}>
       ${node.icon
         ? html`<ha-icon icon=${node.icon} style=${iconStyle}></ha-icon>`
         : node.image
-        ? html`<img src=${node.image} style=${styleMap({ width: '50%', height: '50%', objectFit: 'contain' })} />`
+        ? html`<img src=${node.image} style=${styleMap({ width: iconSize, height: iconSize, 'object-fit': 'contain', 'flex-shrink': '0' })} />`
         : html``}
       <div style=${labelStyle}>${node.label}</div>
       ${node.entities.map((entityConfig) => {
@@ -98,9 +107,7 @@ export function renderNode(
         const state = haEntity?.state ?? 'unavailable';
         const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
         return html`
-          ${entityConfig.label
-            ? html`<div style=${styleMap({ ...valueStyle, fontSize: `${diameterPct * 0.15}%`, color: 'var(--disabled-text-color)' })}>${entityConfig.label}</div>`
-            : html``}
+          ${entityConfig.label ? html`<div style=${sublabelStyle}>${entityConfig.label}</div>` : html``}
           <div style=${valueStyle}>${value}</div>
         `;
       })}
