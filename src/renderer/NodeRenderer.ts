@@ -67,10 +67,20 @@ export function renderNode(
     gap: `${d * 0.02}cqw`,
   });
 
-  const iconStyle = styleMap({
+  // Wrapper div constrains the layout space to exactly iconSize×iconSize.
+  // ha-icon is a Web Component that may ignore external width/height and fill
+  // its flex parent — the wrapper with overflow:hidden prevents that.
+  const iconWrapperStyle = styleMap({
     width: iconSize,
     height: iconSize,
     'flex-shrink': '0',
+    display: 'flex',
+    'align-items': 'center',
+    'justify-content': 'center',
+    overflow: 'hidden',
+  });
+
+  const iconStyle = styleMap({
     '--mdc-icon-size': iconSize,
     color: 'var(--primary-text-color)',
   });
@@ -110,9 +120,9 @@ export function renderNode(
     <div style=${anchorStyle}>
       <div style=${circleStyle} @click=${() => onTap(node)}>
         ${node.icon
-          ? html`<ha-icon icon=${node.icon} style=${iconStyle}></ha-icon>`
+          ? html`<div style=${iconWrapperStyle}><ha-icon icon=${node.icon} style=${iconStyle}></ha-icon></div>`
           : node.image
-          ? html`<img src=${node.image} style=${styleMap({ width: iconSize, height: iconSize, 'object-fit': 'contain', 'flex-shrink': '0' })} />`
+          ? html`<div style=${iconWrapperStyle}><img src=${node.image} style="width:100%;height:100%;object-fit:contain;" /></div>`
           : html``}
         ${node.entities.map((entityConfig) => {
           const haEntity = hassStates[entityConfig.entity];
