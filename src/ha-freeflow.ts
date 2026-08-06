@@ -86,6 +86,15 @@ export class HaFreeflowCard extends LitElement {
     return resolved;
   }
 
+  private _handleEntityTap(entityId: string) {
+    const event = new CustomEvent('hass-more-info', {
+      bubbles: true,
+      composed: true,
+      detail: { entityId },
+    });
+    this.dispatchEvent(event);
+  }
+
   private _handleTap(node: NodeConfig) {
     const action = node.tap_action?.action ?? 'more-info';
     if (action === 'none') return;
@@ -121,9 +130,10 @@ export class HaFreeflowCard extends LitElement {
 
     const viewHeight = this._config.view_height ?? 100;
 
+    const onFlowTap = (entityId: string) => this._handleEntityTap(entityId);
     const flowSvg = resolvedFlows.map((rf) => {
       const style = rf.flow.flow_style ?? this._defaults.flow_style ?? 'dots';
-      return style === 'gradient' ? renderGradient(rf) : renderDots(rf);
+      return style === 'gradient' ? renderGradient(rf, onFlowTap) : renderDots(rf, onFlowTap);
     });
 
     const nodeHtml = this._config.nodes.map((node) =>

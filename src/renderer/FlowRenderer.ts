@@ -38,7 +38,7 @@ function formatFlowValue(rf: ResolvedFlow): string {
   return `${Math.abs(val).toFixed(decimals)} ${unit}`;
 }
 
-function renderFlowLabel(rf: ResolvedFlow): SVGTemplateResult {
+function renderFlowLabel(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
   if (!rf.flow.show_value) return svg``;
   const color = resolveColor(rf);
   const { x, y } = midpoint(rf);
@@ -47,23 +47,29 @@ function renderFlowLabel(rf: ResolvedFlow): SVGTemplateResult {
   const padY = 0.5;
   const fontSize = 1.7;
   const approxWidth = text.length * fontSize * 0.52 + padX * 2;
+  const clickable = !!onTap;
 
   return svg`
-    <rect
-      x="${x - approxWidth / 2}" y="${y - fontSize / 2 - padY}"
-      width="${approxWidth}" height="${fontSize + padY * 2}"
-      rx="1.2" ry="1.2"
-      fill="var(--card-background-color, #fff)"
-      stroke="${color}" stroke-width="0.2"
-    />
-    <text
-      x="${x}" y="${y + fontSize * 0.35}"
-      text-anchor="middle"
-      font-size="${fontSize}"
-      fill="${color}"
-      font-weight="400"
-      font-family="var(--paper-font-body1_-_font-family, sans-serif)"
-    >${text}</text>
+    <g
+      @click=${clickable ? () => onTap!(rf.flow.sensor) : null}
+      style="${clickable ? 'cursor: pointer;' : ''}"
+    >
+      <rect
+        x="${x - approxWidth / 2}" y="${y - fontSize / 2 - padY}"
+        width="${approxWidth}" height="${fontSize + padY * 2}"
+        rx="1.2" ry="1.2"
+        fill="var(--card-background-color, #fff)"
+        stroke="${color}" stroke-width="0.2"
+      />
+      <text
+        x="${x}" y="${y + fontSize * 0.35}"
+        text-anchor="middle"
+        font-size="${fontSize}"
+        fill="${color}"
+        font-weight="400"
+        font-family="var(--paper-font-body1_-_font-family, sans-serif)"
+      >${text}</text>
+    </g>
   `;
 }
 
@@ -99,7 +105,7 @@ function effectiveSensorValue(rf: ResolvedFlow): number | null {
   return val;
 }
 
-export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
+export function renderDots(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
   const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
   const path = buildPath(rf, lineStyle);
   const color = resolveColor(rf);
@@ -113,7 +119,7 @@ export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
 
   return svg`
     <path id="${id}" d="${path}" fill="none" stroke="${color}" stroke-width="0.4" stroke-opacity="0.3"/>
-    ${renderFlowLabel(rf)}
+    ${renderFlowLabel(rf, onTap)}
     ${effective !== null && effective !== 0 ? svg`
       <circle r="0.8" fill="${color}">
         <animateMotion dur="${duration}s" repeatCount="indefinite" keyTimes="0;1"
@@ -139,7 +145,7 @@ export function renderDots(rf: ResolvedFlow): SVGTemplateResult {
   `;
 }
 
-export function renderGradient(rf: ResolvedFlow): SVGTemplateResult {
+export function renderGradient(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
   const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
   const path = buildPath(rf, lineStyle);
   const color = resolveColor(rf);
@@ -166,6 +172,6 @@ export function renderGradient(rf: ResolvedFlow): SVGTemplateResult {
       </linearGradient>
     </defs>
     <path d="${path}" fill="none" stroke="url(#${id})" stroke-width="0.8"/>
-    ${renderFlowLabel(rf)}
+    ${renderFlowLabel(rf, onTap)}
   `;
 }
