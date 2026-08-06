@@ -162,6 +162,17 @@ export function renderDots(rf: ResolvedFlow, onTap?: (entityId: string) => void)
   `;
 }
 
+export function renderStatic(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
+  const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
+  const path = buildPath(rf, lineStyle);
+  const color = resolveColor(rf);
+
+  return svg`
+    <path d="${path}" fill="none" stroke="${color}" stroke-width="0.4" stroke-opacity="0.5"/>
+    ${renderFlowLabel(rf, onTap)}
+  `;
+}
+
 export function renderGradient(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
   const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
   const path = buildPath(rf, lineStyle);

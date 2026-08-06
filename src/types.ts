@@ -1,4 +1,4 @@
-export type FlowStyle = 'dots' | 'gradient';
+export type FlowStyle = 'dots' | 'gradient' | 'none';
 export type LineStyle = 'bezier' | 'straight';
 export type TapActionType = 'more-info' | 'navigate' | 'call-service' | 'none';
 

@@ -12,6 +12,7 @@ import { renderNode } from './renderer/NodeRenderer.js';
 import {
   renderDots,
   renderGradient,
+  renderStatic,
   ResolvedFlow,
 } from './renderer/FlowRenderer.js';
 
@@ -133,7 +134,9 @@ export class HaFreeflowCard extends LitElement {
     const onFlowTap = (entityId: string) => this._handleEntityTap(entityId);
     const flowSvg = resolvedFlows.map((rf) => {
       const style = rf.flow.flow_style ?? this._defaults.flow_style ?? 'dots';
-      return style === 'gradient' ? renderGradient(rf, onFlowTap) : renderDots(rf, onFlowTap);
+      if (style === 'gradient') return renderGradient(rf, onFlowTap);
+      if (style === 'none') return renderStatic(rf, onFlowTap);
+      return renderDots(rf, onFlowTap);
     });
 
     const nodeHtml = this._config.nodes.map((node) =>
