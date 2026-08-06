@@ -23,10 +23,25 @@ function resolveColor(rf: ResolvedFlow): string {
   return val > 0 ? positiveColor : negativeColor;
 }
 
-function midpoint(rf: ResolvedFlow): { x: number; y: number } {
+function positionAlongFlow(rf: ResolvedFlow, t: number): { x: number; y: number } {
+  const x1 = rf.fromNode.x, y1 = rf.fromNode.y;
+  const x2 = rf.toNode.x,   y2 = rf.toNode.y;
+  const lineStyle = rf.flow.line_style ?? rf.defaults.line_style ?? 'bezier';
+
+  if (lineStyle === 'straight') {
+    return { x: x1 + t * (x2 - x1), y: y1 + t * (y2 - y1) };
+  }
+
+  // Cubic bezier control points (same formula as buildPath)
+  const dx = x2 - x1, dy = y2 - y1;
+  const cx1 = x1 + dx * 0.1 - dy * 0.2;
+  const cy1 = y1 + dy * 0.1 + dx * 0.2;
+  const cx2 = x2 - dx * 0.1 - dy * 0.2;
+  const cy2 = y2 - dy * 0.1 + dx * 0.2;
+  const u = 1 - t;
   return {
-    x: (rf.fromNode.x + rf.toNode.x) / 2,
-    y: (rf.fromNode.y + rf.toNode.y) / 2,
+    x: u*u*u*x1 + 3*u*u*t*cx1 + 3*u*t*t*cx2 + t*t*t*x2,
+    y: u*u*u*y1 + 3*u*u*t*cy1 + 3*u*t*t*cy2 + t*t*t*y2,
   };
 }
 
@@ -41,7 +56,9 @@ function formatFlowValue(rf: ResolvedFlow): string {
 function renderFlowLabel(rf: ResolvedFlow, onTap?: (entityId: string) => void): SVGTemplateResult {
   if (!rf.flow.show_value) return svg``;
   const color = resolveColor(rf);
-  const { x, y } = midpoint(rf);
+  const posMap = { start: 1/3, middle: 0.5, end: 2/3 };
+  const t = posMap[rf.flow.value_position ?? 'middle'];
+  const { x, y } = positionAlongFlow(rf, t);
   const text = formatFlowValue(rf);
   const padX = 0.8;
   const padY = 0.5;

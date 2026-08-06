@@ -45,7 +45,7 @@ export function renderNode(
     height: '0',
   });
 
-  const iconSize = `${d * 0.42}cqw`;
+  const iconSize = `${d * 0.30}cqw`;
 
   const circleStyle = styleMap({
     position: 'absolute',

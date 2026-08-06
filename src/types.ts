@@ -48,6 +48,7 @@ export interface FlowConfig {
   show_value?: boolean;
   value_decimals?: number;
   value_unit?: string;
+  value_position?: 'start' | 'middle' | 'end'; // position of value pill along flow line; default: middle
 }
 
 export interface CardDefaults {
