@@ -146,7 +146,7 @@ Each flow defines an animated connection between two nodes.
 | `from` | string | — | **Required.** Source node `id` |
 | `to` | string | — | **Required.** Target node `id` |
 | `sensor` | string | — | **Required.** HA entity whose value drives the animation |
-| `flow_style` | `dots` \| `gradient` | `defaults.flow_style` | Animation style for this flow |
+| `flow_style` | `dots` \| `gradient` \| `none` | `defaults.flow_style` | Animation style for this flow. `none` renders a static line without animation (useful for accumulated energy values like kWh) |
 | `line_style` | `bezier` \| `straight` | `defaults.line_style` | Line shape for this flow |
 | `color` | string | — | Fixed color regardless of sign |
 | `color_positive` | string | `defaults.color_positive` | Color when sensor value > 0 |
@@ -161,6 +161,7 @@ Each flow defines an animated connection between two nodes.
 
 - **dots**: Three dots travel along the line. Speed is proportional to the sensor value (200 W → slow, 2000 W → fast).
 - **gradient**: An animated color gradient flows along the line.
+- **none**: Static line without animation. The value pill (if `show_value: true`) is still displayed. Useful for accumulated daily energy (kWh) where animation would be misleading.
 - **Direction**: Positive values animate `from → to`. Negative values animate `to → from`.
 - **Zero / unavailable**: Animation stops; the line is shown as a faint static line.
 
