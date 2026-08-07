@@ -124,6 +124,7 @@ Each entry in `entities` adds a value display inside the node circle.
 | `label` | string | — | Small sublabel above the value (useful for multi-entity nodes) |
 | `decimals` | number | `0` | Number of decimal places |
 | `unit` | string | — | Unit override. Default: taken from HA entity attributes |
+| `font_size` | number | `1.0` | Font size multiplier for this value. `1.5` = 50% larger, `0.8` = 20% smaller |
 
 ### Tap actions
 
