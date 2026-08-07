@@ -155,7 +155,7 @@ Each flow defines an animated connection between two nodes.
 | `show_value` | boolean | `false` | Show a value pill on the flow line. Clicking it opens more-info for the sensor. |
 | `value_decimals` | number | `0` | Decimal places for the value pill |
 | `value_unit` | string | `W` | Unit shown in the value pill |
-| `value_position` | `start` \| `middle` \| `end` | `middle` | Position of the value pill: near `from` node (start), center (middle), or near `to` node (end) |
+| `value_position` | `start` \| `middle` \| `end` | `middle` | Position of the value pill along the flow line: near `from` node (`start`), center (`middle`), or near `to` node (`end`) |
 
 ### Animation behavior
 
