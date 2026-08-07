@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.1.21] - 2026-08-08
+
 ### Fixed
-- Bezier curves now mirror correctly for symmetric node layouts (e.g. Netz→L1 and Netz→L3 now bow outward in opposite directions)
+- Bezier curves now mirror correctly for symmetric node layouts: control points bow based on the horizontal `dx` component only, so mirrored positions (e.g. Netz→L1 and Netz→L3) produce mirrored curves instead of both bowing in the same direction
 
 ---
 
@@ -179,7 +183,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HACS-compatible (category: Dashboard)
 - GitHub Actions CI/CD: tag → stable release, dev branch → pre-release
 
-[Unreleased]: https://github.com/csoscd/ha-freeflow/compare/v0.1.20...HEAD
+[Unreleased]: https://github.com/csoscd/ha-freeflow/compare/v0.1.21...HEAD
+[0.1.21]: https://github.com/csoscd/ha-freeflow/compare/v0.1.20...v0.1.21
 [0.1.20]: https://github.com/csoscd/ha-freeflow/compare/v0.1.19...v0.1.20
 [0.1.19]: https://github.com/csoscd/ha-freeflow/compare/v0.1.18...v0.1.19
 [0.1.18]: https://github.com/csoscd/ha-freeflow/compare/v0.1.17...v0.1.18
