@@ -14,6 +14,7 @@ export interface EntityConfig {
   label?: string;
   decimals?: number;
   unit?: string;
+  font_size?: number; // multiplier relative to default value size, e.g. 1.5 = 50% larger
 }
 
 export interface NodeConfig {

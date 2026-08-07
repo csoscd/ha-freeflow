@@ -93,14 +93,6 @@ export function renderNode(
     'white-space': 'nowrap',
   });
 
-  const valueStyle = styleMap({
-    'font-size': `${d * 0.14}cqw`,
-    color: 'var(--secondary-text-color)',
-    'line-height': '1.1',
-    'text-align': 'center',
-    'white-space': 'nowrap',
-  });
-
   const labelAbove = (node.label_position ?? 'below') === 'above';
   const labelStyle = styleMap({
     position: 'absolute',
@@ -128,9 +120,16 @@ export function renderNode(
           const haEntity = hassStates[entityConfig.entity];
           const state = haEntity?.state ?? 'unavailable';
           const value = formatValue(state, entityConfig, haEntity ?? { state, attributes: {} });
+          const entityValueStyle = styleMap({
+            'font-size': `${d * 0.14 * (entityConfig.font_size ?? 1)}cqw`,
+            color: 'var(--secondary-text-color)',
+            'line-height': '1.1',
+            'text-align': 'center',
+            'white-space': 'nowrap',
+          });
           return html`
             ${entityConfig.label ? html`<div style=${sublabelStyle}>${entityConfig.label}</div>` : html``}
-            <div style=${valueStyle}>${value}</div>
+            <div style=${entityValueStyle}>${value}</div>
           `;
         })}
       </div>
