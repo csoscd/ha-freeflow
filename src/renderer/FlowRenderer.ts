@@ -32,12 +32,13 @@ function positionAlongFlow(rf: ResolvedFlow, t: number): { x: number; y: number 
     return { x: x1 + t * (x2 - x1), y: y1 + t * (y2 - y1) };
   }
 
-  // Cubic bezier control points (same formula as buildPath)
+  // Cubic bezier control points (same formula as buildPath).
+  // Offset only along dx so mirrored node layouts produce mirrored curves.
   const dx = x2 - x1, dy = y2 - y1;
-  const cx1 = x1 + dx * 0.1 - dy * 0.2;
-  const cy1 = y1 + dy * 0.1 + dx * 0.2;
-  const cx2 = x2 - dx * 0.1 - dy * 0.2;
-  const cy2 = y2 - dy * 0.1 + dx * 0.2;
+  const cx1 = x1 + dx * 0.4;
+  const cy1 = y1 + dy * 0.1;
+  const cx2 = x1 + dx * 0.6;
+  const cy2 = y1 + dy * 0.9;
   const u = 1 - t;
   return {
     x: u*u*u*x1 + 3*u*u*t*cx1 + 3*u*t*t*cx2 + t*t*t*x2,
@@ -100,16 +101,12 @@ function buildPath(rf: ResolvedFlow, lineStyle: 'bezier' | 'straight'): string {
     return `M ${x1} ${y1} L ${x2} ${y2}`;
   }
 
-  const mx = (x1 + x2) / 2;
-  const my = (y1 + y2) / 2;
   const dx = x2 - x1;
   const dy = y2 - y1;
-  const cx1 = x1 + dx * 0.1 - dy * 0.2;
-  const cy1 = y1 + dy * 0.1 + dx * 0.2;
-  const cx2 = x2 - dx * 0.1 - dy * 0.2;
-  const cy2 = y2 - dy * 0.1 + dx * 0.2;
-
-  void mx; void my;
+  const cx1 = x1 + dx * 0.4;
+  const cy1 = y1 + dy * 0.1;
+  const cx2 = x1 + dx * 0.6;
+  const cy2 = y1 + dy * 0.9;
   return `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`;
 }
 
