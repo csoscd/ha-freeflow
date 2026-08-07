@@ -50,6 +50,7 @@ export interface FlowConfig {
   value_decimals?: number;
   value_unit?: string;
   value_position?: 'start' | 'middle' | 'end'; // position of value pill along flow line; default: middle
+  value_font_size?: number; // font size multiplier for the value pill, e.g. 1.5 = 50% larger; default: 1.0
 }
 
 export interface CardDefaults {

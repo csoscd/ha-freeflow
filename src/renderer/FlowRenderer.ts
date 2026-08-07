@@ -62,7 +62,7 @@ function renderFlowLabel(rf: ResolvedFlow, onTap?: (entityId: string) => void): 
   const text = formatFlowValue(rf);
   const padX = 0.8;
   const padY = 0.5;
-  const fontSize = 1.7;
+  const fontSize = 1.7 * (rf.flow.value_font_size ?? 1);
   const approxWidth = text.length * fontSize * 0.52 + padX * 2;
   const clickable = !!onTap;
 

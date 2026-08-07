@@ -156,6 +156,7 @@ Each flow defines an animated connection between two nodes.
 | `value_decimals` | number | `0` | Decimal places for the value pill |
 | `value_unit` | string | `W` | Unit shown in the value pill |
 | `value_position` | `start` \| `middle` \| `end` | `middle` | Position of the value pill along the flow line: near `from` node (`start`), center (`middle`), or near `to` node (`end`) |
+| `value_font_size` | number | `1.0` | Font size multiplier for the value pill. `1.5` = 50% larger, `0.8` = 20% smaller |
 
 ### Animation behavior
 
