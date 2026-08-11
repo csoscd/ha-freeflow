@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.22] - 2026-08-11
+
+### Added
+- `label_entity` per node: optional HA entity ID whose state is used as the node label at runtime. Falls back to the static `label` when the entity is `unavailable` or `unknown`. Useful for nodes whose name changes dynamically (e.g. "current top consumer").
+
+---
+
 ## [0.1.21] - 2026-08-08
 
 ### Fixed
@@ -183,7 +190,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HACS-compatible (category: Dashboard)
 - GitHub Actions CI/CD: tag → stable release, dev branch → pre-release
 
-[Unreleased]: https://github.com/csoscd/ha-freeflow/compare/v0.1.21...HEAD
+[Unreleased]: https://github.com/csoscd/ha-freeflow/compare/v0.1.22...HEAD
+[0.1.22]: https://github.com/csoscd/ha-freeflow/compare/v0.1.21...v0.1.22
 [0.1.21]: https://github.com/csoscd/ha-freeflow/compare/v0.1.20...v0.1.21
 [0.1.20]: https://github.com/csoscd/ha-freeflow/compare/v0.1.19...v0.1.20
 [0.1.19]: https://github.com/csoscd/ha-freeflow/compare/v0.1.18...v0.1.19

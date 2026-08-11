@@ -99,7 +99,8 @@ Each node represents a component in your energy system (e.g. solar, battery, gri
 | Option | Type | Default | Description |
 |---|---|---|---|
 | `id` | string | — | **Required.** Unique identifier, referenced by flows |
-| `label` | string | — | **Required.** Display name shown next to the circle |
+| `label` | string | — | **Required.** Static display name shown next to the circle (used as fallback when `label_entity` is unavailable) |
+| `label_entity` | string | — | HA entity ID whose state is used as the node label. Overrides `label` when the entity is available. Falls back to `label` when `unavailable` or `unknown`. |
 | `x` | number | — | **Required.** Horizontal position (0 = left, 100 = right) |
 | `y` | number | — | **Required.** Vertical position (0 = top, `view_height` = bottom) |
 | `entities` | list | — | **Required.** One or more entities to display (see below) |

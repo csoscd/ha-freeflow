@@ -13,6 +13,13 @@ function formatValue(state: string, config: EntityConfig, haEntity: HassEntity):
   return `${num.toFixed(decimals)}${unit ? ' ' + unit : ''}`;
 }
 
+function resolveLabel(node: NodeConfig, hassStates: Record<string, HassEntity>): string {
+  if (!node.label_entity) return node.label;
+  const state = hassStates[node.label_entity]?.state;
+  if (state && state !== 'unavailable' && state !== 'unknown') return state;
+  return node.label;
+}
+
 export function renderNode(
   node: NodeConfig,
   hassStates: Record<string, HassEntity>,
@@ -133,7 +140,7 @@ export function renderNode(
           `;
         })}
       </div>
-      <div style=${labelStyle}>${node.label}</div>
+      <div style=${labelStyle}>${resolveLabel(node, hassStates)}</div>
     </div>
   `;
 }

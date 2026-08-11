@@ -20,6 +20,7 @@ export interface EntityConfig {
 export interface NodeConfig {
   id: string;
   label: string;
+  label_entity?: string;
   icon?: string;
   image?: string;
   x: number;
