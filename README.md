@@ -6,6 +6,8 @@
 
 A custom Home Assistant Lovelace card for freely configurable energy flow visualization. Unlike fixed-topology cards, **ha-freeflow** lets you place any number of nodes at any position and connect them with animated flow lines — no predefined layout.
 
+![ha-freeflow Example](img/Example_FreeFlow.png)
+
 ---
 
 ## Support me
