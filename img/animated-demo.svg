@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 575">
+
+  <!-- Card background -->
+  <rect width="760" height="575" rx="12" fill="#FAFAFA"/>
+  <rect width="760" height="575" rx="12" fill="none" stroke="#E0E0E0" stroke-width="1.5"/>
+  <text x="18" y="28" fill="#555" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="500">Jackery SolarVault</text>
+
+  <!-- ===== FLOW LINES ===== -->
+  <path id="f-pv1"    d="M 55 82 C 113 97, 142 210, 200 228"      fill="none" stroke="#f0c000" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-pv2"    d="M 150 82 C 170 97, 182 210, 200 228"     fill="none" stroke="#f0c000" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-pv3"    d="M 248 82 C 230 97, 218 210, 200 228"     fill="none" stroke="#f0c000" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-pv4"    d="M 345 82 C 287 97, 258 210, 200 228"     fill="none" stroke="#f0c000" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-sol-sv" d="M 200 228 C 274 246, 312 372, 385 388"   fill="none" stroke="#f0c000" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-sv-hn"  d="M 385 388 C 490 388, 545 388, 650 388"  fill="none" stroke="#40b840" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-sv-bat" d="M 385 388 C 385 403, 385 506, 385 515"  fill="none" stroke="#00bcd4" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-sv-ac"  d="M 385 388 C 297 404, 252 514, 162 528"  fill="none" stroke="#9c27b0" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-netz-hn" d="M 650 194 C 650 213, 650 369, 650 388" fill="none" stroke="#e05050" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-hn-sr"  d="M 650 388 C 598 397, 572 451, 520 458"  fill="none" stroke="#40b840" stroke-width="1.5" stroke-opacity="0.3"/>
+  <path id="f-hn-hl"  d="M 650 388 C 650 402, 650 497, 650 505"  fill="none" stroke="#888"    stroke-width="1.5" stroke-opacity="0.3"/>
+
+  <!-- ===== ANIMATED DOTS ===== -->
+
+  <!-- PV1 → Solar -->
+  <circle r="3.5" fill="#f0c000">            <animateMotion dur="9s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv1"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.6"><animateMotion dur="9s" begin="3s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv1"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.3"><animateMotion dur="9s" begin="6s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv1"/></animateMotion></circle>
+
+  <!-- PV2 → Solar -->
+  <circle r="3.5" fill="#f0c000">            <animateMotion dur="9s" begin="1s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv2"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.6"><animateMotion dur="9s" begin="4s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv2"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.3"><animateMotion dur="9s" begin="7s"   repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv2"/></animateMotion></circle>
+
+  <!-- PV3 → Solar -->
+  <circle r="3.5" fill="#f0c000">            <animateMotion dur="9s" begin="0.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv3"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.6"><animateMotion dur="9s" begin="3.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv3"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.3"><animateMotion dur="9s" begin="6.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv3"/></animateMotion></circle>
+
+  <!-- PV4 → Solar -->
+  <circle r="3.5" fill="#f0c000">            <animateMotion dur="9s" begin="1.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv4"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.6"><animateMotion dur="9s" begin="4.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv4"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.3"><animateMotion dur="9s" begin="7.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-pv4"/></animateMotion></circle>
+
+  <!-- Solar → SolarVault (5.2s, 316W) -->
+  <circle r="3.5" fill="#f0c000">            <animateMotion dur="5.2s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sol-sv"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.6"><animateMotion dur="5.2s" begin="1.73s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sol-sv"/></animateMotion></circle>
+  <circle r="3.5" fill="#f0c000" opacity="0.3"><animateMotion dur="5.2s" begin="3.46s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sol-sv"/></animateMotion></circle>
+
+  <!-- SolarVault → Hausnetz (6.5s, 246W) -->
+  <circle r="3.5" fill="#40b840">            <animateMotion dur="6.5s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-hn"/></animateMotion></circle>
+  <circle r="3.5" fill="#40b840" opacity="0.6"><animateMotion dur="6.5s" begin="2.17s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-hn"/></animateMotion></circle>
+  <circle r="3.5" fill="#40b840" opacity="0.3"><animateMotion dur="6.5s" begin="4.34s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-hn"/></animateMotion></circle>
+
+  <!-- SolarVault → Batterie (10s, 25W - langsam) -->
+  <circle r="3.5" fill="#00bcd4">            <animateMotion dur="10s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-bat"/></animateMotion></circle>
+  <circle r="3.5" fill="#00bcd4" opacity="0.6"><animateMotion dur="10s" begin="3.33s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-bat"/></animateMotion></circle>
+  <circle r="3.5" fill="#00bcd4" opacity="0.3"><animateMotion dur="10s" begin="6.66s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-bat"/></animateMotion></circle>
+
+  <!-- SolarVault → AC-Steckdose (9s, 95W) -->
+  <circle r="3.5" fill="#9c27b0">            <animateMotion dur="9s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-ac"/></animateMotion></circle>
+  <circle r="3.5" fill="#9c27b0" opacity="0.6"><animateMotion dur="9s" begin="3s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-ac"/></animateMotion></circle>
+  <circle r="3.5" fill="#9c27b0" opacity="0.3"><animateMotion dur="9s" begin="6s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-sv-ac"/></animateMotion></circle>
+
+  <!-- Hausnetz → Saugroboter (2.8s, 588W - schnell!) -->
+  <circle r="3.5" fill="#40b840">            <animateMotion dur="2.8s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-sr"/></animateMotion></circle>
+  <circle r="3.5" fill="#40b840" opacity="0.6"><animateMotion dur="2.8s" begin="0.93s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-sr"/></animateMotion></circle>
+  <circle r="3.5" fill="#40b840" opacity="0.3"><animateMotion dur="2.8s" begin="1.86s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-sr"/></animateMotion></circle>
+
+  <!-- Hausnetz → Hauslasten (7s, 230W) -->
+  <circle r="3.5" fill="#888">               <animateMotion dur="7s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-hl"/></animateMotion></circle>
+  <circle r="3.5" fill="#888" opacity="0.6"> <animateMotion dur="7s" begin="2.33s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-hl"/></animateMotion></circle>
+  <circle r="3.5" fill="#888" opacity="0.3"> <animateMotion dur="7s" begin="4.66s" repeatCount="indefinite" keyTimes="0;1" keyPoints="0;1"><mpath href="#f-hn-hl"/></animateMotion></circle>
+
+  <!-- ===== VALUE PILLS ===== -->
+
+  <!-- PV1: 95 W -->
+  <rect x="79" y="131" width="42" height="17" rx="5" fill="white" stroke="#f0c000" stroke-width="1.2"/>
+  <text x="100" y="143.5" text-anchor="middle" fill="#f0c000" font-size="10" font-family="system-ui,sans-serif">95 W</text>
+
+  <!-- PV2: 73 W -->
+  <rect x="150" y="148" width="42" height="17" rx="5" fill="white" stroke="#f0c000" stroke-width="1.2"/>
+  <text x="171" y="160.5" text-anchor="middle" fill="#f0c000" font-size="10" font-family="system-ui,sans-serif">73 W</text>
+
+  <!-- PV3: 78 W -->
+  <rect x="207" y="143" width="42" height="17" rx="5" fill="white" stroke="#f0c000" stroke-width="1.2"/>
+  <text x="228" y="155.5" text-anchor="middle" fill="#f0c000" font-size="10" font-family="system-ui,sans-serif">78 W</text>
+
+  <!-- PV4: 70 W -->
+  <rect x="278" y="150" width="42" height="17" rx="5" fill="white" stroke="#f0c000" stroke-width="1.2"/>
+  <text x="299" y="162.5" text-anchor="middle" fill="#f0c000" font-size="10" font-family="system-ui,sans-serif">70 W</text>
+
+  <!-- Solar → SolarVault: 316 W -->
+  <rect x="265" y="301" width="52" height="17" rx="5" fill="white" stroke="#f0c000" stroke-width="1.2"/>
+  <text x="291" y="313.5" text-anchor="middle" fill="#f0c000" font-size="10" font-family="system-ui,sans-serif">316 W</text>
+
+  <!-- SolarVault → Hausnetz: 246 W -->
+  <rect x="490" y="362" width="52" height="17" rx="5" fill="white" stroke="#40b840" stroke-width="1.2"/>
+  <text x="516" y="374.5" text-anchor="middle" fill="#40b840" font-size="10" font-family="system-ui,sans-serif">246 W</text>
+
+  <!-- SolarVault → Batterie: 25 W -->
+  <rect x="396" y="444" width="42" height="17" rx="5" fill="white" stroke="#00bcd4" stroke-width="1.2"/>
+  <text x="417" y="456.5" text-anchor="middle" fill="#00bcd4" font-size="10" font-family="system-ui,sans-serif">25 W</text>
+
+  <!-- SolarVault → AC: 95 W -->
+  <rect x="253" y="450" width="42" height="17" rx="5" fill="white" stroke="#9c27b0" stroke-width="1.2"/>
+  <text x="274" y="462.5" text-anchor="middle" fill="#9c27b0" font-size="10" font-family="system-ui,sans-serif">95 W</text>
+
+  <!-- Netz → Hausnetz: 0 W -->
+  <rect x="660" y="283" width="38" height="17" rx="5" fill="white" stroke="#e05050" stroke-width="1.2"/>
+  <text x="679" y="295.5" text-anchor="middle" fill="#e05050" font-size="10" font-family="system-ui,sans-serif">0 W</text>
+
+  <!-- ===== NODES ===== -->
+
+  <!-- PV1 (55, 82) r=24 -->
+  <circle cx="55" cy="82" r="24" fill="white" stroke="#aaa" stroke-width="2.5"/>
+  <g transform="translate(55,82)" fill="none" stroke="#666" stroke-width="1.4">
+    <rect x="-10" y="-7" width="20" height="13" rx="1"/>
+    <line x1="-10" y1="-.5" x2="10" y2="-.5"/>
+    <line x1="-3" y1="-7" x2="-3" y2="6"/>
+    <line x1="3" y1="-7" x2="3" y2="6"/>
+  </g>
+  <text x="55" y="116" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">PV1</text>
+
+  <!-- PV2 (150, 82) r=24 -->
+  <circle cx="150" cy="82" r="24" fill="white" stroke="#aaa" stroke-width="2.5"/>
+  <g transform="translate(150,82)" fill="none" stroke="#666" stroke-width="1.4">
+    <rect x="-10" y="-7" width="20" height="13" rx="1"/>
+    <line x1="-10" y1="-.5" x2="10" y2="-.5"/>
+    <line x1="-3" y1="-7" x2="-3" y2="6"/>
+    <line x1="3" y1="-7" x2="3" y2="6"/>
+  </g>
+  <text x="150" y="116" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">PV2</text>
+
+  <!-- PV3 (248, 82) r=24 -->
+  <circle cx="248" cy="82" r="24" fill="white" stroke="#aaa" stroke-width="2.5"/>
+  <g transform="translate(248,82)" fill="none" stroke="#666" stroke-width="1.4">
+    <rect x="-10" y="-7" width="20" height="13" rx="1"/>
+    <line x1="-10" y1="-.5" x2="10" y2="-.5"/>
+    <line x1="-3" y1="-7" x2="-3" y2="6"/>
+    <line x1="3" y1="-7" x2="3" y2="6"/>
+  </g>
+  <text x="248" y="116" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">PV3</text>
+
+  <!-- PV4 (345, 82) r=24 -->
+  <circle cx="345" cy="82" r="24" fill="white" stroke="#aaa" stroke-width="2.5"/>
+  <g transform="translate(345,82)" fill="none" stroke="#666" stroke-width="1.4">
+    <rect x="-10" y="-7" width="20" height="13" rx="1"/>
+    <line x1="-10" y1="-.5" x2="10" y2="-.5"/>
+    <line x1="-3" y1="-7" x2="-3" y2="6"/>
+    <line x1="3" y1="-7" x2="3" y2="6"/>
+  </g>
+  <text x="345" y="116" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">PV4</text>
+
+  <!-- Solar (200, 228) r=40 yellow -->
+  <circle cx="200" cy="228" r="40" fill="white" stroke="#f0c000" stroke-width="3"/>
+  <path d="M 205 212 L 195 229 L 202 229 L 197 245 L 210 226 L 203 226 Z" fill="#f0c000"/>
+  <text x="200" y="280" text-anchor="middle" fill="#777" font-size="11" font-family="system-ui,sans-serif">Solar</text>
+
+  <!-- SolarVault (385, 388) r=38 grey -->
+  <circle cx="385" cy="388" r="38" fill="white" stroke="#888" stroke-width="2.5"/>
+  <path d="M 390 372 L 380 389 L 387 389 L 382 405 L 395 386 L 388 386 Z" fill="#555"/>
+  <text x="385" y="436" text-anchor="middle" fill="#777" font-size="11" font-family="system-ui,sans-serif">SolarVault</text>
+
+  <!-- Netz (650, 194) r=34 red -->
+  <circle cx="650" cy="194" r="34" fill="white" stroke="#e05050" stroke-width="2.5"/>
+  <g transform="translate(650,194)" stroke="#e05050" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <line x1="0" y1="-14" x2="0" y2="11"/>
+    <line x1="-11" y1="-7" x2="11" y2="-7"/>
+    <line x1="-7" y1="1" x2="7" y2="1"/>
+    <line x1="-11" y1="-7" x2="-4" y2="11"/>
+    <line x1="11" y1="-7" x2="4" y2="11"/>
+  </g>
+  <text x="650" y="238" text-anchor="middle" fill="#777" font-size="11" font-family="system-ui,sans-serif">Netz</text>
+
+  <!-- Hausnetz (650, 388) r=38 green -->
+  <circle cx="650" cy="388" r="38" fill="white" stroke="#40b840" stroke-width="2.5"/>
+  <g transform="translate(650,388)" fill="none" stroke="#40b840" stroke-width="2" stroke-linejoin="round">
+    <polyline points="-15,0 0,-16 15,0"/>
+    <rect x="-11" y="0" width="22" height="16"/>
+    <rect x="-4" y="6" width="9" height="10"/>
+  </g>
+  <text x="650" y="436" text-anchor="middle" fill="#777" font-size="11" font-family="system-ui,sans-serif">Hausnetz</text>
+
+  <!-- Saugroboter (520, 458) r=28 green -->
+  <circle cx="520" cy="458" r="28" fill="white" stroke="#40b840" stroke-width="2.5"/>
+  <circle cx="520" cy="455" r="11" fill="none" stroke="#40b840" stroke-width="1.6"/>
+  <circle cx="520" cy="455" r="3.5" fill="#40b840"/>
+  <text x="520" y="470" text-anchor="middle" fill="#40b840" font-size="9" font-family="system-ui,sans-serif">588 W</text>
+  <text x="520" y="496" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">Saugroboter</text>
+
+  <!-- Batterie (385, 515) r=34 teal -->
+  <circle cx="385" cy="515" r="34" fill="white" stroke="#00bcd4" stroke-width="2.5"/>
+  <g transform="translate(385,512)">
+    <rect x="-13" y="-10" width="26" height="18" rx="2" fill="none" stroke="#00bcd4" stroke-width="1.8"/>
+    <rect x="13" y="-5" width="4" height="8" rx="1" fill="#00bcd4"/>
+    <rect x="-13" y="-10" width="8" height="18" rx="2" fill="#00bcd4" opacity="0.4"/>
+  </g>
+  <text x="385" y="527" text-anchor="middle" fill="#00bcd4" font-size="9" font-family="system-ui,sans-serif">13 %</text>
+  <text x="385" y="559" text-anchor="middle" fill="#777" font-size="11" font-family="system-ui,sans-serif">Batterie</text>
+
+  <!-- AC-Steckdose (162, 528) r=38 purple -->
+  <circle cx="162" cy="528" r="38" fill="white" stroke="#9c27b0" stroke-width="2.5"/>
+  <g transform="translate(162,525)" fill="none" stroke="#9c27b0" stroke-width="2" stroke-linecap="round">
+    <rect x="-13" y="-14" width="26" height="22" rx="3"/>
+    <line x1="-6" y1="-8" x2="-6" y2="2"/>
+    <line x1="6" y1="-8" x2="6" y2="2"/>
+  </g>
+  <text x="162" y="576" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">AC-Steckdose</text>
+
+  <!-- Hauslasten (650, 505) r=32 grey -->
+  <circle cx="650" cy="505" r="32" fill="white" stroke="#888" stroke-width="2.5"/>
+  <g transform="translate(650,503)" fill="none" stroke="#888" stroke-width="2" stroke-linejoin="round">
+    <polyline points="-13,0 0,-14 13,0"/>
+    <rect x="-10" y="0" width="20" height="14"/>
+    <rect x="-4" y="5" width="8" height="9"/>
+  </g>
+  <text x="650" y="518" text-anchor="middle" fill="#888" font-size="9" font-family="system-ui,sans-serif">230 W</text>
+  <text x="650" y="547" text-anchor="middle" fill="#777" font-size="10" font-family="system-ui,sans-serif">Hauslasten</text>
+
+</svg>
